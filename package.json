@@ -4,7 +4,10 @@
 	"type": "module",
 	"scripts": {
 		"test": "echo \"Error: no test specified\" && exit 1",
-		"prepare": "husky"
+		"prepare": "husky",
+		"server": "cd server && pnpm dev",
+		"client": "cd client && pnpm dev",
+		"dev": "concurrently \"pnpm client\" \"npm run server\""
 	},
 	"lint-staged": {
 		"**/*.{ts,tsx,md,css,json}": [
@@ -17,6 +20,7 @@
 	"devDependencies": {
 		"@commitlint/cli": "^19.4.1",
 		"@commitlint/config-conventional": "^19.4.1",
+		"concurrently": "^8.2.2",
 		"husky": "^9.1.5",
 		"lint-staged": "^15.2.10",
 		"prettier": "3.3.3"
