@@ -3,9 +3,11 @@ import cors from "cors";
 import { configDotenv } from "dotenv";
 import helmet from "helmet";
 import morgan from "morgan";
-import { fileURLToPath } from "url";
+
 import path, { dirname } from "path";
 import favicon from "serve-favicon";
+import { ConnectDB } from "./utilities/connectDb";
+import { fileURLToPath } from "url";
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
@@ -33,7 +35,13 @@ app.all("*", (_req, res) => {
 });
 
 const PORT = process.env.PORT;
+const URI = `mongodb+srv://${process.env.DB_USER}:${process.env.DB_PASSWORD}@cluster0.qljvr.mongodb.net/simpletasks?retryWrites=true&w=majority&appName=Cluster0`;
 
-app.listen(PORT, () => {
-	console.log("server is listening at port", PORT);
-});
+const connectServer = async () => {
+	await ConnectDB(URI);
+	app.listen(PORT, () => {
+		console.log("server is listening at port", PORT);
+	});
+};
+
+connectServer();

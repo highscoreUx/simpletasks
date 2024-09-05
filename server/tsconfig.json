@@ -1,6 +1,8 @@
 {
 	"compilerOptions": {
 		"forceConsistentCasingInFileNames": true,
+		"rootDir": "./",
+		"allowJs": true,
 		"strict": true,
 		"target": "es2017",
 		"module": "ES2022",
@@ -26,8 +28,10 @@
 		"baseUrl": "."
 	},
 	"ts-node": {
-		"esm": true
+		"esm": true,
+		"experimentalSpecifierResolution": "node"
 	},
+
 	"exclude": ["node_modules"],
 	"include": ["./src/**/*.ts"]
 }
