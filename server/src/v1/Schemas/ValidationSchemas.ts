@@ -8,7 +8,7 @@ export const userSchema = z.object({
 		.trim()
 		.min(1, { message: "email cannot be one character" }),
 	password: z.string(),
-	role: z.enum(["user", "admin"]),
+	role: z.enum(["user", "admin"]).default("user"),
 	isVerified: z.boolean().default(false),
 	isActive: z.boolean().default(true),
 });

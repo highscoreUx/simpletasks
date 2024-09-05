@@ -8,6 +8,7 @@ import path, { dirname } from "path";
 import favicon from "serve-favicon";
 import { ConnectDB } from "./utilities/connectDb";
 import { fileURLToPath } from "url";
+import { Userrouter } from "./v1/Routes";
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
@@ -30,6 +31,7 @@ app.get("/", (_req, res) => {
 	res.status(200).json({ msg: "Welcome" });
 });
 
+app.use("/api/v1/auth", Userrouter);
 app.all("*", (_req, res) => {
 	res.status(200).json({ msg: "can't find route" });
 });
