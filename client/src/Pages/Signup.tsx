@@ -4,6 +4,9 @@ import { MdOutlineMail } from "react-icons/md";
 import { Link } from "react-router-dom";
 import Logo from "../assets/Logo";
 import setPageTitle from "../Utilities/setPageTitle";
+import { useMutation } from "@tanstack/react-query";
+import { signUpUser } from "../Utilities/api";
+import toast from "react-hot-toast";
 
 interface ICredentials {
 	email: string;
@@ -23,6 +26,7 @@ setPageTitle("Sign Up");
 const Signup: React.FC = () => {
 	const [isEmailLogin, setIsEMailLogin] = useState<Boolean>(false);
 	const [page, setPage] = useState("");
+	const [isValidEmail, setIsValidEmail] = useState(false);
 	const [credentials, setCredentials] = useState<ICredentials>({
 		email: "",
 		password: "",
@@ -36,6 +40,26 @@ const Signup: React.FC = () => {
 	});
 
 	const allValidationsPassed = Object.values(validation).every(Boolean);
+	const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+
+	const { mutate } = useMutation({
+		mutationKey: ["Sign Up"],
+		mutationFn: (obj: object) => {
+			return signUpUser(obj);
+		},
+		onSuccess: (data) => {
+			console.log(data);
+		},
+		onError: (error) => {
+			toast.dismiss();
+			toast.error(error.message);
+		},
+	});
+
+	const handleSubmit = (e: React.MouseEvent<HTMLButtonElement>) => {
+		e.preventDefault();
+		mutate(credentials);
+	};
 
 	return (
 		<div className="w-full sm:w-[350px]">
@@ -105,12 +129,22 @@ const Signup: React.FC = () => {
 										</p>
 									</div>
 								)}
+
 								<button
 									type="submit"
-									className="mt-2 bg-neutral-800 text-white disabled:bg-neutral-400 disabled:text-neutral-500"
+									className="mt-4 bg-neutral-800 text-white disabled:bg-neutral-300 disabled:text-neutral-500"
 									disabled={!allValidationsPassed}
+									onClick={handleSubmit}
 								>
 									Finish sign up
+								</button>
+								<button
+									className="mt-2"
+									onClick={() => {
+										setPage("");
+									}}
+								>
+									Go Back
 								</button>
 							</div>
 						</form>
@@ -126,19 +160,29 @@ const Signup: React.FC = () => {
 											...credentials,
 											email: e.currentTarget.value,
 										});
+										setIsValidEmail(emailRegex.test(e.currentTarget.value));
 									}}
 									placeholder="Enter your email address"
 									className="p-3 rounded-lg border placeholder:text-sm"
 								/>
 								<button
 									type="submit"
-									className="mt-2 bg-neutral-800 text-white"
+									className="mt-4 bg-neutral-800 text-white disabled:bg-neutral-300 disabled:text-neutral-500"
+									disabled={!isValidEmail}
 									onClick={(e) => {
 										e.preventDefault();
 										setPage("password");
 									}}
 								>
 									Continue with Email
+								</button>
+								<button
+									className="mt-2"
+									onClick={() => {
+										setIsEMailLogin(false);
+									}}
+								>
+									Go Back
 								</button>
 							</div>
 						</form>
