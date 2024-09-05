@@ -3,6 +3,7 @@ import { FaGoogle } from "react-icons/fa";
 import { MdOutlineMail } from "react-icons/md";
 import { Link } from "react-router-dom";
 import Logo from "../assets/Logo";
+import setPageTitle from "../Utilities/setPageTitle";
 
 interface ICredentials {
 	email: string;
@@ -16,6 +17,8 @@ interface Ivalidation {
 	hasSmall: boolean;
 	hasSpecial: boolean;
 }
+
+setPageTitle("Sign Up");
 
 const Signup: React.FC = () => {
 	const [isEmailLogin, setIsEMailLogin] = useState<Boolean>(false);
