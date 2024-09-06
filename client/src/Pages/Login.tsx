@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { FaGoogle } from "react-icons/fa";
 import { MdOutlineMail } from "react-icons/md";
-import { Link } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import Logo from "../assets/Logo";
 import setPageTitle from "../Utilities/setPageTitle";
 import { useMutation } from "@tanstack/react-query";
@@ -29,6 +29,8 @@ const Login: React.FC = () => {
 	const [isEmailLogin, setIsEMailLogin] = useState<Boolean>(false);
 	const [page, setPage] = useState("");
 	const [isValidEmail, setIsValidEmail] = useState(false);
+	const navigate = useNavigate();
+	const location = useLocation();
 	const { setUser, setAccessToken, setIsLoggedin } = useAuthContext();
 	const [credentials, setCredentials] = useState<ICredentials>({
 		email: "",
@@ -44,6 +46,7 @@ const Login: React.FC = () => {
 
 	const allValidationsPassed = Object.values(validation).every(Boolean);
 	const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+	const navigateLocation = location?.state?.from?.pathname || "/dashboard";
 
 	const { isPending, mutate } = useMutation({
 		mutationKey: ["Sign in"],
@@ -62,6 +65,8 @@ const Login: React.FC = () => {
 			localStorage.setItem("user", converted);
 			toast.dismiss();
 			toast.success(data.msg);
+			console.log(location);
+			navigate(navigateLocation);
 		},
 		onError: (error) => {
 			toast.dismiss();
