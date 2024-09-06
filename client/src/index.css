@@ -20,7 +20,7 @@
 	}
 
 	button {
-		@apply border p-3 rounded-lg;
+		@apply border p-3 rounded-lg transition-colors duration-500;
 	}
 
 	input {
