@@ -32,7 +32,7 @@ const AuthContextProvider: React.FC<IContext> = ({ children }) => {
 		const stringUser = localStorage.getItem("user");
 		return stringUser ? JSON.parse(stringUser) : null;
 	});
-	const [isLoggedin, setIsLoggedin] = useState<boolean>(false);
+	const [isLoggedin, setIsLoggedin] = useState<boolean>(!!user);
 
 	useEffect(() => {
 		setIsLoggedin(!!user);

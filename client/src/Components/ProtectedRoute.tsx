@@ -6,8 +6,6 @@ const ProtectedRoute: React.FC = () => {
 	const { user, isLoggedin } = useAuthContext();
 	const location = useLocation();
 
-	console.log({ user, isLoggedin });
-
 	if (!user || !isLoggedin) {
 		return <Navigate to={"/auth/login"} state={{ from: location }} replace />;
 	}
