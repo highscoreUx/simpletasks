@@ -9,7 +9,7 @@ Simple Tasks is a personal task management application designed to help users ma
 ### User Authentication
 
 - [ ] **Signup/Login**: Users can create an account or log in to manage their tasks.
-- [ ] **Authentication**: Secure authentication using JWT (JSON Web Tokens).
+- [x] **Authentication**: Secure authentication using JWT (JSON Web Tokens).
 
 ### Task Management
 
