@@ -3,7 +3,7 @@ import cors from "cors";
 import { configDotenv } from "dotenv";
 import helmet from "helmet";
 import morgan from "morgan";
-
+import cookieParser from "cookie-parser";
 import path, { dirname } from "path";
 import favicon from "serve-favicon";
 import { ConnectDB } from "./utilities/connectDb";
@@ -26,6 +26,7 @@ app.use(
 app.use(helmet());
 app.use(morgan("dev"));
 app.use(favicon(path.join(__dirname, "public", "favicon.ico")));
+app.use(cookieParser());
 
 app.get("/", (_req, res) => {
 	res.status(200).json({ msg: "Welcome" });

@@ -43,3 +43,13 @@ export const taskSchema = z.object({
 		.optional(),
 	comments: z.array(z.string()).optional(),
 });
+
+export const loginSchema = z.object({
+	email: z
+		.string()
+		.email({ message: "Please provide a valid email" })
+		.toLowerCase()
+		.trim()
+		.min(1, { message: "email cannot be one character" }),
+	password: z.string(),
+});
