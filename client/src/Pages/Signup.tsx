@@ -7,6 +7,7 @@ import setPageTitle from "../Utilities/setPageTitle";
 import { useMutation } from "@tanstack/react-query";
 import { signUpUser } from "../Utilities/api";
 import toast from "react-hot-toast";
+import Loader from "../Components/Loader";
 
 interface ICredentials {
 	email: string;
@@ -42,7 +43,7 @@ const Signup: React.FC = () => {
 	const allValidationsPassed = Object.values(validation).every(Boolean);
 	const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
 
-	const { mutate } = useMutation({
+	const { isPending, mutate } = useMutation({
 		mutationKey: ["Sign Up"],
 		mutationFn: (obj: object) => {
 			return signUpUser(obj);
@@ -82,6 +83,8 @@ const Signup: React.FC = () => {
 								<input
 									type="password"
 									name="password"
+									title="password"
+									autoComplete="new-password"
 									value={credentials.password}
 									onChange={(e) => {
 										setCredentials({
@@ -133,10 +136,10 @@ const Signup: React.FC = () => {
 								<button
 									type="submit"
 									className="mt-4 bg-neutral-800 text-white disabled:bg-neutral-300 disabled:text-neutral-500"
-									disabled={!allValidationsPassed}
+									disabled={!allValidationsPassed || isPending}
 									onClick={handleSubmit}
 								>
-									Finish sign up
+									{isPending ? <Loader size={18} /> : "Finish sign up"}
 								</button>
 								<button
 									className="mt-2"
@@ -154,6 +157,7 @@ const Signup: React.FC = () => {
 								<input
 									type="email"
 									name="email"
+									title="email"
 									value={credentials.email}
 									onChange={(e) => {
 										setCredentials({
